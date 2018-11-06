@@ -22,6 +22,10 @@ module.exports.ipsum = async (event, context) => {
   }
   return {
     statusCode,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },    
     body: JSON.stringify({
       message: message,
       input: event,
