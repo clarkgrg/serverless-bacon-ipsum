@@ -1,0 +1,21 @@
+#noServerNovember Serverless Ipsum
+
+service: baconipsum 
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: us-east-1
+
+  environment:
+    type: meat-and-filler
+
+functions:
+  ipsum:
+    handler: handler.ipsum
+    events: 
+      - http: 
+          path: ipsum
+          method: get
+          cors: true       
