@@ -1,34 +1,40 @@
 'use strict';
-let axios = require('axios');
+const { render } = require('./libs/render');
+const { fetchIpsum } = require('./libs/fetch');
 
+// Uses Bacon Ipsum generator
+// https://baconipsum.com/json-api/
+
+
+// Return Bacon Ipsum JSON message
 module.exports.ipsum = async (event, context) => {
-
-  // Calling Bacon Ipsum
-  // https://baconipsum.com/json-api/
-
-  // Type is defined in environment variable
-  const type = process.env.type;
   let message = '';
-  let statusCode = 200;
-  const queryUrl = `https://baconipsum.com/api/?type=${type}`;
-
   try {
-    const response = await axios.get(queryUrl);
-    message = response.data[0];
+    message = await fetchIpsum();
   } catch (err) {
     console.log(err);
-    statusCode = 400;
-    message = err;
+    message = "ERROR: Cannot generate meaty Ipsum right now";
   }
   return {
-    statusCode,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-    },    
-    body: JSON.stringify({
-      message: message,
-      input: event,
-    }),
+    statusCode: 200,
+    headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true },    
+    body: JSON.stringify({ message: message, input: event }),
   };
 };
+
+// Return Bacon Ipsum wrapped in HTML (should be wrapped in bacon)
+module.exports.ipsumHTML = async (event, context) => {
+  let content = '';  
+  try {
+    content = await fetchIpsum();
+  } catch (err) {
+    console.log(err);
+    content = "ERROR: Cannot generate meaty Ipsum right now";
+  }
+  const html = render(content);
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'text/html' },
+    body: html
+  };  
+}

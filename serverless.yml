@@ -18,4 +18,12 @@ functions:
       - http: 
           path: ipsum
           method: get
-          cors: true       
+          cors: true     
+  ipsumHTML:
+    handler: handler.ipsumHTML
+    events: 
+      - http: 
+          path: ipsumHTML
+          method: get
+          cors: true     
+          
