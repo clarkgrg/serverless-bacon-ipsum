@@ -15,7 +15,7 @@ https://r1ahde8gw6.execute-api.us-east-1.amazonaws.com/dev/ipsumHTML
 ## Bacon Ipsum Called from Web Page 
 [Serverless Bacon Ipsum Web Page](https://s3.amazonaws.com/noserve-ipsum/index.html)
 
-This call serverless function
+This calls serverless function
 ```
 https://r1ahde8gw6.execute-api.us-east-1.amazonaws.com/dev/ipsum
 ```
